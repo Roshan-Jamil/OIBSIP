@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List Web App</title>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            font-family: sans-serif;
+        }
+        h1 {
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            text-align: left;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .form-container, .list-container {
+            width: 800px;
+            margin: 0 50px; 
+            justify-content: left;
+            color: grey;
+        }
+        .form-container {
+          border: 2px solid rgb(0, 0, 0);
+          padding: 20px;
+          border-radius: 10px;
+         }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid green;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: green;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkgreen;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            color: black;
+        }
+        tr:nth-child(even) {background-color: #f2f2f2;}
+        
+        button.delete-btn {
+          background-color:red; 
+          color:white; 
+          border:none; 
+          padding:5px; 
+          cursor:pointer
+         }
+         button.delete-btn:hover {background-color:#cc0000}
+    </style>
+</head>
+<body>
+    <h1>To-Do List Web App</h1>
+    <div class="container">
+        <div class="form-container">
+            <form id="todo-form">
+                <label for="title" placeholder="Title">Title</label><br>
+                <input type="text" id="title" name="title"><br>
+                <label for="description" placeholder="Description">Description</label><br>
+                <textarea id="description" name="description" cols="80" rows="10"></textarea><br>
+                <input type="submit" value="Save">
+            </form>
+        </div>
+        <div class="list-container">
+            <table id="todo-list">
+                <tr>
+                    <th style="color: white;">Title</th>
+                    <th style="color: white;">Description</th>
+                    <th style="color: white;">Delete</th>
+                </tr>
+                <tr><hr></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const todoForm = document.querySelector('#todo-form');
+        const todoList = document.querySelector('#todo-list');
+
+        todoForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const title = todoForm.title.value.trim();
+            const description = todoForm.description.value.trim();
+
+            if (title && description) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td cellpading="10" cellspacing="10" width="20%">${title}</td>
+                    <td cellpading="10" cellspacing="10" width="80%">${description}</td>
+                    <!-- added class to the delete button -->
+                    <td><button class="delete-btn">x</button></td> 
+                `;
+
+                todoList.appendChild(row);
+
+                todoForm.reset();
+                
+                row.querySelector('button').addEventListener('click', () => {
+                    row.remove();
+                });
+                
+                todoForm.title.focus();
+                
+                console.log("To-Do item added!");
+                
+             } else {
+                 console.log("Please enter a title and description.");
+             }
+         });
+     </script>
+
+</body>
+</html>
